@@ -1,3 +1,15 @@
+/*
+ * Programmer: Patrick Bouley
+ * Date: November 23, 2026
+ * File: Supabase Server Client
+ *
+ * This file creates a Supabase client for server-side operations.
+ * It uses environment variables to connect to the Supabase project.
+ * Next.js cookies are used to access the current authentication session.
+ * The client allows server components to retrieve data and user information.
+ * The function returns a configured Supabase server client.
+ */
+
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
