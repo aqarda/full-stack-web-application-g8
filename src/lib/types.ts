@@ -12,7 +12,7 @@
  */
 
 // Movie
-// One movie as the app uses it. The database column release_year is renamed to releaseYear when the movies are loaded from Supabase.
+// One movie as the app uses it.
 export type Movie = {
   id: string;
   title: string;

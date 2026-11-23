@@ -60,7 +60,7 @@ export default function MovieCard({ movie, isAdmin }: MovieCardProps) {
     <li className="flex flex-col rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
       {/* Title and release year */}
       <h3 className="text-lg font-semibold">{movie.title}</h3>
-      <p className="text-sm text-gray-600">Released in {movie.releaseYear}</p>
+      <p className="text-sm text-gray-600">Released in {movie.release_year}</p>
 
       {/* Actors */}
       <p className="mt-4 text-sm font-semibold">Actors</p>
