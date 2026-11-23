@@ -17,7 +17,7 @@ export type Movie = {
   id: string;
   title: string;
   actors: string[];
-  releaseYear: number;
+  release_year: number;
 };
 
 // User role
