@@ -5,7 +5,7 @@
  * Date:        2026-11-23
  * Assignment:  Full-Stack Web Applications, IMR Movie Portal
  *
- * Description: This file holds the styles that every page of the IMR Movien Portal shares. 
+ * Description: This file holds the styles that every page of the IMR Movie Portal shares. 
  * Inputs: it has no inputs and is loaded once by the root layout. 
  * Processing: it brings in Tailwind CSS and adds our own site colours
  * to the Tailwind theme, so we can use them as normal Tailwind classes.
