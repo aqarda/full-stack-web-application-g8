@@ -31,7 +31,7 @@ const MovieForm = ({ movie }: MovieFormProps) => {
     // input states
     const [title, setTitle] = useState(movie ? movie.title : "");
     const [actors, setActors] = useState<string[]>(movie ? movie.actors : [""]);
-    const [releaseYear, setReleaseYear] = useState(movie ? String(movie.releaseYear) : "");
+    const [releaseYear, setReleaseYear] = useState(movie ? String(movie.release_year) : "");
 
     // error and saving states
     const [titleError, setTitleError] = useState("");
@@ -76,14 +76,14 @@ const MovieForm = ({ movie }: MovieFormProps) => {
         const result = movieSchema.safeParse({
             title: title,
             actors: cleanActors,
-            releaseYear: releaseYear.trim() === "" ? NaN : Number(releaseYear),
+            release_year: releaseYear.trim() === "" ? NaN : Number(releaseYear),
         });
 
         if (!result.success) {
             const errors = z.flattenError(result.error).fieldErrors;
             setTitleError(errors.title ? errors.title[0] : "");
             setActorsError(errors.actors ? errors.actors[0] : "");
-            setYearError(errors.releaseYear ? errors.releaseYear[0] : "");
+            setYearError(errors.release_year ? errors.release_year[0] : "");
             return;
         }
 
@@ -95,7 +95,7 @@ const MovieForm = ({ movie }: MovieFormProps) => {
         const { data: sameYearMovies, error: checkError } = await supabase
             .from("movies")
             .select("id, title")
-            .eq("release_year", newMovie.releaseYear);
+            .eq("release_year", newMovie.release_year);
 
         if (checkError) {
             setSaveError("Could not save the movie. Please try again.");
@@ -118,7 +118,7 @@ const MovieForm = ({ movie }: MovieFormProps) => {
         const movieData = {
             title: newMovie.title,
             actors: newMovie.actors,
-            release_year: newMovie.releaseYear,
+            release_year: newMovie.release_year,
         };
 
         // updates if editing, inserts if adding

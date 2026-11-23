@@ -31,7 +31,7 @@ export const movieSchema = z.object({
             return lowerCaseActors.every((actor, i) => lowerCaseActors.indexOf(actor) === i);
         }, "The same actor is listed more than once."),
 
-    releaseYear: z
+    release_year: z
         .number("Enter a release year, like 1999.")
         .int("Release year must be a whole number, like 1999.")
         .min(1888, "Release year must be 1888 or later.")

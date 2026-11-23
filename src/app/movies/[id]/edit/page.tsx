@@ -48,7 +48,7 @@ const EditMoviePage = async ({ params }: EditMoviePageProps) => {
         id: data.id,
         title: data.title,
         actors: data.actors,
-        releaseYear: data.release_year,
+        release_year: data.release_year,
     };
 
     return (
