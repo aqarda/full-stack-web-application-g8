@@ -69,7 +69,6 @@ When you add or edit a movie, the title is required and can be up to 150 charact
 
 We tested the live site by hand with 34 test cases covering the display, the three kinds of users, signing in, adding, editing and deleting. Every test and its result is in [docs/TESTING.md](docs/TESTING.md).
 
-TODO (after the test run): replace this line with one sentence on how the tests went
 
 ## Where things are
 
