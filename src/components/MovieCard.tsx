@@ -6,17 +6,18 @@
  * Assignment:  Full-Stack Web Applications, IMR Movie Portal
  *
  * Description: This component shows one movie as a card in the movie list.
- * Inputs: the movie to show, whether the current user is an admin, and the onEdit function from Member 2's MovieManager. 
- * Processing: it lists every actor of the movie and, only for admins, adds an Edit button that hands the
- * movie to onEdit and a Delete button that asks for confirmation and then calls the deleteMovie server action. 
+ * Inputs: the movie to show and whether the current user is an admin.
+ * Processing: it lists every actor of the movie and, only for admins, adds an Edit link that opens Member 2's
+ * edit page for this movie and a Delete button that asks for confirmation and then calls the deleteMovie server action.
  * Output: a card with the title, the release year, the actors as a list and the admin buttons, plus a message on
- * the card if the delete fails. While the delete is running the buttons are turned off and the Delete button 
+ * the card if the delete fails. While the delete is running the buttons are turned off and the Delete button
  * says Deleting, so it cannot be clicked twice.
  */
 
 "use client";
 
 // Imports
+import Link from "next/link";
 import { useState, useTransition } from "react";
 import { deleteMovie } from "@/app/actions/deleteMovie";
 import type { Movie } from "@/lib/types";
@@ -25,11 +26,10 @@ import type { Movie } from "@/lib/types";
 type MovieCardProps = {
   movie: Movie;
   isAdmin: boolean;
-  onEdit: (movie: Movie) => void;
 };
 
 // Movie card
-export default function MovieCard({ movie, isAdmin, onEdit }: MovieCardProps) {
+export default function MovieCard({ movie, isAdmin }: MovieCardProps) {
   // State
   const [isDeleting, startDeleting] = useTransition();
   const [deleteError, setDeleteError] = useState("");
@@ -74,14 +74,16 @@ export default function MovieCard({ movie, isAdmin, onEdit }: MovieCardProps) {
       {isAdmin && (
         <div className="mt-auto pt-5">
           <div className="flex gap-3">
-            <button
-              type="button"
-              onClick={() => onEdit(movie)}
-              disabled={isDeleting}
-              className="rounded-md border border-brand px-4 py-2 text-sm font-medium text-brand hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-60"
+            <Link
+              href={`/movies/${movie.id}/edit`}
+              aria-disabled={isDeleting}
+              tabIndex={isDeleting ? -1 : undefined}
+              className={`rounded-md border border-brand px-4 py-2 text-sm font-medium text-brand hover:bg-red-50 ${
+                isDeleting ? "pointer-events-none opacity-60" : ""
+              }`}
             >
               Edit
-            </button>
+            </Link>
             <button
               type="button"
               onClick={handleDelete}

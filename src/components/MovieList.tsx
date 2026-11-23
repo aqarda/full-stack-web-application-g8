@@ -6,10 +6,9 @@
  * Assignment:  Full-Stack Web Applications, IMR Movie Portal
  *
  * Description: This component shows all the movies as a grid of cards.
- * Inputs: the list of movies, whether the current user is an admin, and an onEdit function that Member 2's 
- * MovieManager passes in so the Edit button can open the edit form. 
- * Processing: if the list is empty it shows a short message, otherwise it makes one MovieCard 
- * for each movie and uses the movie id as the key. 
+ * Inputs: the list of movies and whether the current user is an admin, both passed in by the main page.
+ * Processing: if the list is empty it shows a short message, otherwise it makes one MovieCard
+ * for each movie and uses the movie id as the key.
  * Output: a heading with the number of movies and a grid that is one column wide on phones, two on tablets and three on bigger screens.
  * The list itself has no buttons, each card handles its own Edit and Delete.
  */
@@ -22,11 +21,10 @@ import type { Movie } from "@/lib/types";
 type MovieListProps = {
   movies: Movie[];
   isAdmin: boolean;
-  onEdit: (movie: Movie) => void;
 };
 
 // Movie list
-export default function MovieList({ movies, isAdmin, onEdit }: MovieListProps) {
+export default function MovieList({ movies, isAdmin }: MovieListProps) {
   const movieCountText = movies.length === 1 ? "1 movie" : `${movies.length} movies`;
 
   return (
@@ -48,12 +46,7 @@ export default function MovieList({ movies, isAdmin, onEdit }: MovieListProps) {
         /* One card for each movie */
         <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {movies.map((movie) => (
-            <MovieCard
-              key={movie.id}
-              movie={movie}
-              isAdmin={isAdmin}
-              onEdit={onEdit}
-            />
+            <MovieCard key={movie.id} movie={movie} isAdmin={isAdmin} />
           ))}
         </ul>
       )}
