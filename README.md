@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# IMR Movie Portal
 
-## Getting Started
+This is our group 8 project for the Full-Stack Web Applications assignment at SAIT. The Internet Movies Rental Company (IMR) wanted a simple portal to keep their movie database up to date, so we built one with Next.js and Supabase. Anyone can look at the movie list, but only an admin account can add, edit or delete movies.
 
-First, run the development server:
+Live site: TODO (Patrick, after deploying) add the Vercel link
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+GitHub repo: https://github.com/aqarda/full-stack-web-application-g8
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Who did what
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Patrick Bouley (Member 1): set up the Supabase database and its security rules, sign in and sign out, the loading and error pages, and deployed the site to Vercel.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Fernando Lopez (Member 2): adding and editing movies, the movie form and all of the validation.
 
-## Learn More
+John Leandro Loyao (Member 3): the layout, navbar, footer and movie list, deleting movies, this README, the test log and the final submission.
 
-To learn more about Next.js, take a look at the following resources:
+## What the site does
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The main page lists every movie with its title, release year and all of its actors. The navbar and footer show on every page, and the footer has the company's contact info and store hours.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+There are three kinds of users. Guests (not signed in) and viewer accounts can only browse the list. The admin account can also add a movie, edit one, or delete one after confirming. The admin check happens in three places: the page hides the buttons, the server actions check the role again, and the Row Level Security rules in Supabase stop anyone who isn't an admin from changing the data.
 
-## Deploy on Vercel
+We used Next.js 16 with TypeScript, Tailwind CSS for the styling, Supabase for the database and the accounts, Zod for the form validation, and Vercel for hosting.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Test accounts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+We made one admin account and one viewer account for marking. The logins are in our Brightspace submission comment and not in here, because this repo is public.
+
+## Running it locally
+
+You need Node.js 20.9 or newer.
+
+1. Clone the repo and install the packages:
+
+   ```bash
+   git clone https://github.com/aqarda/full-stack-web-application-g8.git
+   cd full-stack-web-application-g8
+   npm install
+   ```
+
+2. In the top folder of the project, make a file called `.env.local` with these two lines, using the values from our Supabase project:
+
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=your project URL
+   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your publishable key
+   ```
+
+   Git ignores this file, so it never gets pushed.
+3. Run `npm run dev` and go to http://localhost:3000.
+
+`npm run build` makes a production build and `npm run lint` runs ESLint.
+
+## Setting up Supabase
+
+1. Create a new project on supabase.com.
+2. Go to Authentication, then Users, and add two users with auto confirm turned on, one for the admin and one for the viewer.
+3. Open `database/IMR_Database_Setup.sql` and change the two email addresses near the bottom to the emails of those two users.
+4. Run the whole file in the SQL Editor. It makes the `movies` table, adds 5 movies, turns on Row Level Security with rules that let anyone read but only the admin change movies, and gives each user their role. The role is saved as `movie_role` in the user's app metadata, which users can't change themselves.
+5. The users have to sign out and back in before a new role works.
+6. Copy the Project URL and the publishable key into `.env.local` (see Running it locally).
+
+Don't put the secret key (what used to be called the service_role key) in the app or in the repo.
+
+## Validation
+
+When you add or edit a movie, the title is required and can be up to 150 characters, and any spaces at the start and end get trimmed off. A movie needs at least 1 actor and at most 20, each name can be up to 80 characters, empty actor rows are ignored, and the same actor can't be listed twice. The release year has to be a whole number from 1888 up to two years after the current year. You also can't add the same title and year twice. These rules are checked in the form and checked again on the server before anything is saved.
+
+## Testing
+
+We tested the live site by hand with 34 test cases covering the display, the three kinds of users, signing in, adding, editing and deleting. Every test and its result is in [docs/TESTING.md](docs/TESTING.md).
+
+TODO (after the test run): replace this line with one sentence on how the tests went
+
+## Where things are
+
+The pages and server actions are in `src/app`, the components are in `src/components`, and the Supabase client, sign in helpers, validation rules and shared types are in `src/lib`. The SQL that sets up the database is in `database/IMR_Database_Setup.sql`.
