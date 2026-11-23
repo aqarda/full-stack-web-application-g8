@@ -12,11 +12,11 @@ Patrick Bouley (Member 1): set up the Supabase database and its security rules, 
 
 Fernando Lopez (Member 2): adding and editing movies, the movie form and all of the validation.
 
-John Leandro Loyao (Member 3): the layout, navbar, footer and movie list, deleting movies, this README, the test log and the final submission.
+John Leandro Loyao (Member 3): the layout, navbar and footer, the main page with the movie list and the sign in status, deleting movies, README, the test log and the final submission.
 
 ## What the site does
 
-The main page lists every movie with its title, release year and all of its actors. The navbar and footer show on every page, and the footer has the company's contact info and store hours.
+The main page lists every movie with its title, release year and all of its actors. If you are signed in, it shows your email and account type with a Logout button, and guests get a link to sign in. The navbar and footer show on every page, and the footer has the company's contact info and store hours.
 
 There are three kinds of users. Guests (not signed in) and viewer accounts can only browse the list. The admin account also gets an Add a movie button and Edit and Delete buttons on every movie. Adding and editing happen on their own pages, `/movies/new` and `/movies/[id]/edit`, and deleting asks you to confirm first. The admin check happens in three places: the main page only shows those buttons to the admin, the add page, the edit page and the delete action check the role again on the server, and the Row Level Security rules in Supabase stop anyone who isn't an admin from changing the data.
 
@@ -24,7 +24,7 @@ We used Next.js 16 with TypeScript, Tailwind CSS for the styling, Supabase for t
 
 ## Test accounts
 
-We made one admin account and one viewer account for marking. The logins are in our Brightspace submission comment and not in here, because this repo is public.
+We made one admin account and one viewer account for marking. The logins are in our Brightspace submission comment and not in here.
 
 ## Running it locally
 
@@ -68,8 +68,6 @@ When you add or edit a movie, the title is required and can be up to 150 charact
 ## Testing
 
 We tested the live site by hand with 34 test cases covering the display, the three kinds of users, signing in, adding, editing and deleting. Every test and its result is in [docs/TESTING.md](docs/TESTING.md).
-
-TODO (after the test run): replace this line with one sentence on how the tests went
 
 ## Where things are
 
