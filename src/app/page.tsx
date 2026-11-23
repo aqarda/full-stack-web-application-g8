@@ -1,69 +1,77 @@
-import Image from "next/image";
+/*
+ * File:        src/app/page.tsx
+ * Author:      John Leandro Loyao (Member 3)
+ * Group:       Group 8
+ * Date:        2026-11-23
+ * Assignment:  Full-Stack Web Applications, IMR Movie Portal
+ *
+ * Description: This is the main page of the IMR Movie Portal, the Next.js and Supabase site that the Internet
+ * Movies Rental Company uses to keep its movie database up to date.
+ * Inputs: the visitor's sign in cookie, which tells us if they are a guest, a viewer or an admin, and the rows
+ * in the Supabase movies table.
+ * Processing: the page asks Supabase who the user is and loads every movie at the same time, then passes the
+ * movies and the admin setting down to the movie list. Signed in users see their email and role with Member 1's
+ * logout button, and guests get a link to the sign in page. Only admins get the Add a movie button, which opens
+ * Member 2's add page.
+ * Output: the page heading, the sign in status, the Add a movie button for admins, and the movie list with
+ * every movie's title, actors and release year.
+ */
 
-export default function Home() {
+// Imports
+import Link from "next/link";
+import LogoutButton from "@/components/LogoutButton";
+import MovieList from "@/components/MovieList";
+import { getCurrentUser } from "@/lib/auth";
+import { getMovies } from "@/lib/movies";
+
+// Movies page
+export default async function MoviesPage() {
+  // Load the signed in user and the movies at the same time. If the movies
+  // cannot be loaded, getMovies throws and error.tsx shows its message.
+  const [currentUser, movies] = await Promise.all([getCurrentUser(), getMovies()]);
+  const isAdmin = currentUser.role === "admin";
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="flex flex-col gap-8">
+      {/* Page heading, with the Add a movie button for admins */}
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold">Movie catalogue</h1>
+          <p className="mt-2 text-base text-gray-600">
+            Every movie we have for rent, with its actors and release year.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        {isAdmin && (
+          <Link
+            href="/movies/new"
+            className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark"
           >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            Add a movie
+          </Link>
+        )}
+      </div>
+
+      {/* Sign in status: who is signed in with the logout button, or a sign in link for guests */}
+      {currentUser.user ? (
+        <div className="rounded-lg border border-gray-200 bg-white p-4">
+          <p className="text-base">
+            Signed in as <span className="font-semibold">{currentUser.user.email}</span> ({currentUser.role} account)
+          </p>
+          <LogoutButton />
         </div>
-      </main>
+      ) : (
+        <p className="rounded-lg border border-gray-200 bg-white p-4 text-base">
+          You are browsing as a guest.{" "}
+          <Link href="/login" className="font-medium text-brand hover:underline">
+            Sign in
+          </Link>{" "}
+          if you have a staff account.
+        </p>
+      )}
+
+      {/* Every movie as a card */}
+      <MovieList movies={movies} isAdmin={isAdmin} />
     </div>
   );
 }
