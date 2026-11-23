@@ -18,7 +18,7 @@ John Leandro Loyao (Member 3): the layout, navbar, footer and movie list, deleti
 
 The main page lists every movie with its title, release year and all of its actors. The navbar and footer show on every page, and the footer has the company's contact info and store hours.
 
-There are three kinds of users. Guests (not signed in) and viewer accounts can only browse the list. The admin account can also add a movie, edit one, or delete one after confirming. The admin check happens in three places: the page hides the buttons, the server actions check the role again, and the Row Level Security rules in Supabase stop anyone who isn't an admin from changing the data.
+There are three kinds of users. Guests (not signed in) and viewer accounts can only browse the list. The admin account also gets an Add a movie button and Edit and Delete buttons on every movie. Adding and editing happen on their own pages, `/movies/new` and `/movies/[id]/edit`, and deleting asks you to confirm first. The admin check happens in three places: the main page only shows those buttons to the admin, the add page, the edit page and the delete action check the role again on the server, and the Row Level Security rules in Supabase stop anyone who isn't an admin from changing the data.
 
 We used Next.js 16 with TypeScript, Tailwind CSS for the styling, Supabase for the database and the accounts, Zod for the form validation, and Vercel for hosting.
 
@@ -63,13 +63,14 @@ Don't put the secret key (what used to be called the service_role key) in the ap
 
 ## Validation
 
-When you add or edit a movie, the title is required and can be up to 150 characters, and any spaces at the start and end get trimmed off. A movie needs at least 1 actor and at most 20, each name can be up to 80 characters, empty actor rows are ignored, and the same actor can't be listed twice. The release year has to be a whole number from 1888 up to two years after the current year. You also can't add the same title and year twice. These rules are checked in the form and checked again on the server before anything is saved.
+When you add or edit a movie, the title is required and can be up to 150 characters, and any spaces at the start and end get trimmed off. A movie needs at least 1 actor and at most 20, each name can be up to 80 characters, empty actor rows are ignored, and the same actor can't be listed twice. The release year has to be a whole number from 1888 up to two years after the current year. You also can't add the same title and year twice. The form checks all of these with a Zod schema before it saves anything, and shows the message under the box that needs fixing.
 
 ## Testing
 
 We tested the live site by hand with 34 test cases covering the display, the three kinds of users, signing in, adding, editing and deleting. Every test and its result is in [docs/TESTING.md](docs/TESTING.md).
 
+TODO (after the test run): replace this line with one sentence on how the tests went
 
 ## Where things are
 
-The pages and server actions are in `src/app`, the components are in `src/components`, and the Supabase client, sign in helpers, validation rules and shared types are in `src/lib`. The SQL that sets up the database is in `database/IMR_Database_Setup.sql`.
+The pages and the delete action are in `src/app` (the add and edit pages are in `src/app/movies`), the components are in `src/components`, and the Supabase client, sign in helpers, validation rules and shared types are in `src/lib`. The SQL that sets up the database is in `database/IMR_Database_Setup.sql`.
