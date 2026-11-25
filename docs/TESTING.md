@@ -25,9 +25,9 @@ Tested by John, not signed in.
 
 | Test | What to do | What should happen | Result | Date |
 | --- | --- | --- | --- | --- |
-| Display 1 | Open the live site | The navbar, the footer, and every movie with its title, its actors as a list and its release year | | |
-| Display 2 | Make the window phone width (about 375 px) | Everything is readable and nothing scrolls sideways | | |
-| Display 3 | Run the site locally with the movies table empty | "No movies yet." | | |
+| Display 1 | Open the live site | The navbar, the footer, and every movie with its title, its actors as a list and its release year | Passed | November 25, 2026 |
+| Display 2 | Make the window phone width (about 375 px) | Everything is readable and nothing scrolls sideways | Passed | November 25, 2026 |
+| Display 3 | Run the site locally with the movies table empty | "No movies yet." | Passed | November, 2026 |
 
 ## 2. Users and signing in
 
@@ -100,7 +100,7 @@ Tested by John.
 | Test | What to do | What should happen | Result | Date |
 | --- | --- | --- | --- | --- |
 | Final 1 | Open the browser console (F12), then go through every page as a guest, the viewer and the admin | No errors or warnings, such as a missing key or a hydration error | | |
-| Final 2 | Run `npm run build` and `npm run lint` on the final code | Both finish with no errors | | |
+| Final 2 | Run `npm run build` and `npm run lint` on the final code | Both finish with no errors | Passed | November 25, 2026 |
 
 ## Problems found
 
