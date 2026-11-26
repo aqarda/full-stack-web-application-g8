@@ -19,7 +19,6 @@
 
 // Imports
 import Link from "next/link";
-import LogoutButton from "@/components/LogoutButton";
 import MovieList from "@/components/MovieList";
 import { getCurrentUser } from "@/lib/auth";
 import { getMovies } from "@/lib/movies";
@@ -28,7 +27,10 @@ import { getMovies } from "@/lib/movies";
 export default async function MoviesPage() {
   // Load the signed in user and the movies at the same time. If the movies
   // cannot be loaded, getMovies throws and error.tsx shows its message.
-  const [currentUser, movies] = await Promise.all([getCurrentUser(), getMovies()]);
+  const [currentUser, movies] = await Promise.all([
+    getCurrentUser(),
+    getMovies(),
+  ]);
   const isAdmin = currentUser.role === "admin";
 
   return (
@@ -56,13 +58,18 @@ export default async function MoviesPage() {
       {currentUser.user ? (
         <div className="rounded-lg border border-gray-200 bg-white p-4">
           <p className="text-base">
-            Signed in as <span className="font-semibold">{currentUser.user.email}</span> ({currentUser.role} account)
+            Signed in as{" "}
+            <span className="font-semibold">{currentUser.user.email}</span> (
+            {currentUser.role} account)
           </p>
         </div>
       ) : (
         <p className="rounded-lg border border-gray-200 bg-white p-4 text-base">
           You are browsing as a guest.{" "}
-          <Link href="/login" className="font-medium text-brand hover:underline">
+          <Link
+            href="/login"
+            className="font-medium text-brand hover:underline"
+          >
             Sign in
           </Link>{" "}
           if you have an account.
