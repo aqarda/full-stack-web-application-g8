@@ -5,18 +5,24 @@
  * Date:        2026-11-23
  * Assignment:  Full-Stack Web Applications, IMR Movie Portal
  *
- * Description: This component is the custom navbar shown at the top of every page. 
- * Inputs: it takes no props and does not read anything from the database, so it is the same for every visitor. 
- * Processing: it lays out the company name on the left and the page links on the right, and lets the links drop under the name when the screen is too narrow. 
+ * Description: This component is the custom navbar shown at the top of every page.
+ * Inputs: it takes no props and does not read anything from the database, so it is the same for every visitor.
+ * Processing: it lays out the company name on the left and the page links on the right, and lets the links drop under the name when the screen is too narrow.
  * Output: a header with a link back to the movies page and a link to the staff sign in page.
  * We built it ourselves with Tailwind instead of using a navbar from a UI library, and it stays in its normal place at the top of the page.
  */
 
 // Imports
 import Link from "next/link";
+import LogoutButton from "@/components/LogoutButton";
+
+// Role information is passed from the layout.
+interface NavbarProps {
+  role: string;
+}
 
 // Navbar
-export default function Navbar() {
+export default function Navbar({ role }: NavbarProps) {
   return (
     <header className="bg-brand text-white">
       <nav
@@ -30,17 +36,23 @@ export default function Navbar() {
         </Link>
 
         {/* Page links */}
-        <ul className="flex gap-6 text-base font-medium">
+        <ul className="flex items-center gap-8 text-base font-medium ">
           <li>
             <Link href="/" className="hover:underline">
               Movies
             </Link>
           </li>
-          <li>
-            <Link href="/login" className="hover:underline">
-              Staff sign in
-            </Link>
-          </li>
+          {role === "guest" ? (
+            <li>
+              <Link href="/login" className="hover:underline">
+                Sign in
+              </Link>
+            </li>
+          ) : (
+            <li>
+              <LogoutButton />
+            </li>
+          )}
         </ul>
       </nav>
     </header>

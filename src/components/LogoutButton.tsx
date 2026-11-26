@@ -28,31 +28,37 @@ export default function LogoutButton() {
     setLoading(true);
     setError("");
 
-    // End the user's Supabase session.
-    const { error: logoutError } = await supabase.auth.signOut();
+    try {
+      // End the user's Supabase session.
+      const { error: logoutError } = await supabase.auth.signOut();
 
-    if (logoutError) {
-      setError(logoutError.message);
+      if (logoutError) {
+        setError(logoutError.message);
+        return;
+      }
+
+      // Return to the homepage as a guest.
+      router.push("/");
+      router.refresh();
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
       setLoading(false);
-      return;
     }
-
-    // Refresh the page to display the guest state.
-    router.refresh();
   }
 
   return (
-    <div className="mt-4">
+    <div>
       <button
         onClick={handleLogout}
         disabled={loading}
-        className="rounded bg-red-600 px-4 py-2 text-white disabled:opacity-50"
+        className="hover:underline disabled:opacity-50"
       >
         {loading ? "Logging out..." : "Logout"}
       </button>
 
       {error && (
-        <p role="alert" className="mt-2 text-red-500">
+        <p role="alert" className="text-sm text-red-200">
           {error}
         </p>
       )}

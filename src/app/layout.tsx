@@ -6,7 +6,7 @@
  * Assignment:  Full-Stack Web Applications, IMR Movie Portal
  *
  * Description: This is the root layout that wraps every page of the IMR Movie Portal. 
- * Inputs: Next.js passes in the page that is being shown as children.
+ * Inputs: Next.js passes in the page that is being shown as children. It also retrieves the current user's authentication role.
  * Processing: it loads the global styles, sets the page title and description for the browser tab and search engines, 
  * and places the page between our navbar and footer. 
  * Output: a full HTML page where the navbar is at the top, the page content fills the middle, 
@@ -19,6 +19,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import "./globals.css";
+import { getCurrentUser } from "@/lib/auth";
 
 // Page information for the browser tab 
 export const metadata: Metadata = {
@@ -28,11 +29,14 @@ export const metadata: Metadata = {
 };
 
 // Root layout
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+
+    const { role } = await getCurrentUser();
+
   return (
     <html lang="en" className="h-full antialiased">
       <body className="flex min-h-full flex-col bg-paper font-sans text-ink">
-        <Navbar />
+        <Navbar role={role} />
 
         {/* Page content grows to fill the space so the footer stays at the bottom */}
         <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">

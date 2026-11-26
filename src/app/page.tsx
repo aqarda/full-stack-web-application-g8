@@ -58,7 +58,6 @@ export default async function MoviesPage() {
           <p className="text-base">
             Signed in as <span className="font-semibold">{currentUser.user.email}</span> ({currentUser.role} account)
           </p>
-          <LogoutButton />
         </div>
       ) : (
         <p className="rounded-lg border border-gray-200 bg-white p-4 text-base">
@@ -66,7 +65,7 @@ export default async function MoviesPage() {
           <Link href="/login" className="font-medium text-brand hover:underline">
             Sign in
           </Link>{" "}
-          if you have a staff account.
+          if you have an account.
         </p>
       )}
 
