@@ -17,46 +17,54 @@ import type { Movie } from "@/lib/types";
 
 // props
 interface EditMoviePageProps {
-    params: Promise<{ id: string }>;
+  params: Promise<{ id: string }>;
 }
 
 const EditMoviePage = async ({ params }: EditMoviePageProps) => {
-    const { id } = await params;
-    const { role } = await getCurrentUser();
+  const { id } = await params;
+  const { role } = await getCurrentUser();
 
-    // only the admin can edit movies
-    if (role === "guest") {
-        redirect("/login");
-    }
-    if (role !== "admin") {
-        redirect("/");
-    }
+  // only the admin can edit movies
+  if (role === "guest") {
+    redirect("/login");
+  }
+  if (role !== "admin") {
+    redirect("/");
+  }
 
-    // loads the movie
-    const supabase = await createClient();
-    const { data } = await supabase
-        .from("movies")
-        .select("*")
-        .eq("id", id)
-        .maybeSingle();
+  // loads the movie
+  const supabase = await createClient();
 
-    if (!data) {
-        notFound();
-    }
+  // Retrieve the selected movie from Supabase.
+  const { data, error } = await supabase
+    .from("movies")
+    .select("*")
+    .eq("id", id)
+    .maybeSingle();
 
-    const movie: Movie = {
-        id: data.id,
-        title: data.title,
-        actors: data.actors,
-        release_year: data.release_year,
-    };
+  // Handle database errors separately.
+  if (error) {
+    throw new Error("Failed to load the selected movie.");
+  }
 
-    return (
-        <section className="flex flex-col gap-6">
-            <h1 className="text-3xl font-bold">Edit movie</h1>
-            <MovieForm movie={movie} />
-        </section>
-    );
+  // Show the 404 page if the movie does not exist.
+  if (!data) {
+    notFound();
+  }
+
+  const movie: Movie = {
+    id: data.id,
+    title: data.title,
+    actors: data.actors,
+    release_year: data.release_year,
+  };
+
+  return (
+    <section className="flex flex-col gap-6">
+      <h1 className="text-3xl font-bold">Edit movie</h1>
+      <MovieForm movie={movie} />
+    </section>
+  );
 };
 
 export default EditMoviePage;
