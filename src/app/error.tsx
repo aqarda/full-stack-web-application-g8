@@ -36,7 +36,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
         <div className="flex justify-center gap-4">
           <button
             onClick={() => reset()}
-            className="rounded bg-blue-600 px-4 py-2 text-white"
+            className="rounded bg-brand px-4 py-2 text-white"
           >
             Try Again
           </button>

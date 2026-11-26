@@ -91,7 +91,7 @@ Tested by Patrick.
 
 | Test | What to do | What should happen | Result | Date |
 | --- | --- | --- | --- | --- |
-| Error 1 | Put a wrong Supabase URL in `.env.local` and open the site | The page shows a loading screen, them the error page appears with a Try Again button and nothing crashes | Passed | Nov 26 |
+| Error 1 | Put a wrong Supabase URL in `.env.local` and open the site | The page shows a loading screen, then the error page appears with a Try Again button and nothing crashes | Passed | Nov 26 |
 
 ## 7. Final checks
 
