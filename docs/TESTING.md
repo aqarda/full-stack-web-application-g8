@@ -2,7 +2,7 @@
 
 We tested the site by hand. Each of us tested the part we built. Result is Pass or Fail. If a test failed, we wrote it under [Problems found](#problems-found) at the bottom, the person who built that part fixed it, and we ran the test again.
 
-- **Site tested:** TODO (Patrick, after deploying) add the Vercel link
+- **Site tested:** https://full-stack-web-application-g8.vercel.app/
 - **Logins used:** the admin and viewer test accounts (they are in our Brightspace submission comment)
 - **Browser:** a private window, so no old sign in was left over
 

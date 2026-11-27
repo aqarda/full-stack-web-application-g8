@@ -2,7 +2,7 @@
 
 This is our group 8 project for the Full-Stack Web Applications assignment at SAIT. The Internet Movies Rental Company (IMR) wanted a simple portal to keep their movie database up to date, so we built one with Next.js and Supabase. Anyone can look at the movie list, but only an admin account can add, edit or delete movies.
 
-Live site: TODO (Patrick, after deploying) add the Vercel link
+Live site: https://full-stack-web-application-g8.vercel.app/
 
 GitHub repo: https://github.com/aqarda/full-stack-web-application-g8
 
