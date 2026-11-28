@@ -99,7 +99,7 @@ Tested by John.
 
 | Test | What to do | What should happen | Result | Date |
 | --- | --- | --- | --- | --- |
-| Final 1 | Open the browser console (F12), then go through every page as a guest, the viewer and the admin | No errors or warnings, such as a missing key or a hydration error | | |
+| Final 1 | Open the browser console (F12), then go through every page as a guest, the viewer and the admin | No errors or warnings, such as a missing key or a hydration error | Passed | November 27, 2026 |
 | Final 2 | Run `npm run build` and `npm run lint` on the final code | Both finish with no errors | Passed | November 25, 2026 |
 
 ## Problems found
